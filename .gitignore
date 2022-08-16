@@ -1,0 +1,6 @@
+*/vendor/*
+.git
+.idea
+.github
+.bak
+/mer/*.bak
