@@ -1,16 +1,17 @@
 <?php
 
+include_once "controlador/CatalogosControlador.php";
+
 /**
  * el archivo de rutas es el que va a controlar las peticiones que llegan al back
+ * el permitir el acceso va a ser desde los parametros GET de la ruta y que existan los campos: peticion y funcion
  * y este va a responder en un JSON (status: t/f, [msg], opcionalmente: data) y el codigo: 200,201, 404, 500
  * control paramentros GET, datos de formulario: paramentros POST
  */
 
 $respuesta_back = array(
     'status' => false,
-    'msg' => array(
-        'Error, no encontre la peticion solicitada'
-    )
+    'msg' => array()
 );
 
 $parametrosGet = $_GET;
@@ -18,24 +19,35 @@ $parametrosGet = $_GET;
 $rutas = new Rutas();
 //var_dump($parametrosGet);exit;
 
-if(isset($parametrosGet['peticion']) && $parametrosGet['peticion'] != ''
-    && isset($parametrosGet['funcion']) && $parametrosGet['funcion'] != ''){
+$pasa_url = true;
+if(!isset($parametrosGet['peticion']) || $parametrosGet['peticion'] == ''){
+    $pasa_url = false;
+    $respuesta_back['msg'][] = 'Error, el campo GET - peticion es requerido';
+}if(!isset($parametrosGet['funcion']) || $parametrosGet['funcion'] == ''){
+    $pasa_url = false;
+    $respuesta_back['msg'][] = 'Error, el campo GET - funcion es requerido';
+}
+
+if($pasa_url){
     //se recibio el parametro peticion y podemos avanzar
-    switch ($parametrosGet['peticion']){
+    switch ($parametrosGet['peticion']){ //es el que controla el grupo de peticiones
         case 'catalogos':
-            switch ($parametrosGet['funcion']){
+            //se crea instancia de la clase para poder usar sus funciones y atributos
+            $catControlador = new CatalogosControlador();
+            //var_dump($catControlador->codigoRespuesta);exit;
+            switch ($parametrosGet['funcion']){ //el que controla las funciones
                 case 'cat_contacto':
-                    $respuesta_back['status'] = true;
-                    $respuesta_back['msg'] = array(
-                        'se obtuvo el catalogo correctamente'
-                    );
-                    $respuesta_back['data'] = array(
-                        'cat_contacto' => array(
-                            ['id' => 1,'nombre' => 'Celular'],
-                            ['id' => 2,'nombre' => 'Telefono casa'],
-                        )
-                    );
-                    $rutas->peticion(200,$respuesta_back);
+                    $respuestaCtrl = $catControlador->obtenerCatContacto();
+                    //realizar una terna para saber el codigo de respuesta condicional ? valor_v : valor_f
+                    /**
+                     * if(condional){
+                        //codigo aqui o algo
+                     * }else{
+                        //codigo aqui o algo
+                     * }
+                     */
+                    //$rutas->peticion($respuestaCtrl['status'] ? 200 : 500,$respuestaCtrl);
+                    $rutas->peticion($catControlador->getCodigoRespuesta(),$respuestaCtrl);
                     break;
                 default:
                     $respuesta_back['status'] = false;
@@ -71,10 +83,6 @@ if(isset($parametrosGet['peticion']) && $parametrosGet['peticion'] != ''
     }
 
 }else{
-    $respuesta_back['status'] = false;
-    $respuesta_back['msg'] = array(
-        'Error, falta el parametro peticionnnn en la ruta'
-    );
     $rutas->peticion(400,$respuesta_back);
 }
 
