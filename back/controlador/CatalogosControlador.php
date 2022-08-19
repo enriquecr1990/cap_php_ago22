@@ -1,6 +1,6 @@
 <?php
 
-include_once "modelo/BaseDeDatos.php";
+include_once "modelo/CatContactoModelo.php";
 
 class CatalogosControlador
 {
@@ -18,8 +18,8 @@ class CatalogosControlador
             $respuesta['msg'] = array(
                 'se obtuvo el catalogo correctamente'
             );
-            $baseDeDatos = new BaseDeDatos();
-            $respuesta['data']['cat_contacto'] = $baseDeDatos->obtenerCatContacto();
+            $catContactoModelo = new CatContactoModelo();
+            $respuesta['data']['cat_contacto'] = $catContactoModelo->obtenerListado();
             $this->codigoRespuesta = 200;
         }catch (Exception $ex){
             $respuesta['status'] = false;

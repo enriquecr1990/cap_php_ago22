@@ -1,6 +1,7 @@
 <?php
 
 include_once "controlador/CatalogosControlador.php";
+include_once "controlador/EmpleadoControlador.php";
 
 /**
  * el archivo de rutas es el que va a controlar las peticiones que llegan al back
@@ -15,6 +16,8 @@ $respuesta_back = array(
 );
 
 $parametrosGet = $_GET;
+$parametrosPost = $_POST;
+//var_dump($parametrosGet,$parametrosPost);exit;
 
 $rutas = new Rutas();
 //var_dump($parametrosGet);exit;
@@ -58,11 +61,20 @@ if($pasa_url){
                     break;
             }
             break;
-        case 'contacto':
+        case 'empleado':
+            $empleadoControlador = new EmpleadoControlador();
             /**
              * preparar todas las funciones posibles del API rest: consultar registro, agregar registro, modificar y eliminar
              */
             switch ($parametrosGet['funcion']){
+                case 'listado':
+                    $respuestaEmpCtrl = $empleadoControlador->obtenerEmpleados();
+                    $rutas->peticion($empleadoControlador->getCodigoRespuesta(),$respuestaEmpCtrl);
+                    break;
+                case 'nuevo':
+                    $respuestaEmpCtrl = $empleadoControlador->insertarNuevo($parametrosPost);
+                    $rutas->peticion($empleadoControlador->getCodigoRespuesta(),$respuestaEmpCtrl);
+                    break;
                 default:
                     $respuesta_back['status'] = false;
                     $respuesta_back['msg'] = array(
