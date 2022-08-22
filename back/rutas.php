@@ -75,6 +75,10 @@ if($pasa_url){
                     $respuestaEmpCtrl = $empleadoControlador->insertarNuevo($parametrosPost);
                     $rutas->peticion($empleadoControlador->getCodigoRespuesta(),$respuestaEmpCtrl);
                     break;
+                case 'actualizar':
+                    $respuestaEmpCtrl = $empleadoControlador->actualizar($parametrosPost);
+                    $rutas->peticion($empleadoControlador->getCodigoRespuesta(),$respuestaEmpCtrl);
+                    break;
                 default:
                     $respuesta_back['status'] = false;
                     $respuesta_back['msg'] = array(

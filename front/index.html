@@ -17,6 +17,10 @@
             <div class="alert alert-info">Agenda telefonica</div>
         </div>
 
+        <div class="row" id="seccion_mensajes_sistema" style="display: none;">
+            <div class="alert alert-danger" id="div_mensasjes_sistema"></div>
+        </div>
+
         <!-- seccion de filtro y resultados -->
         <div id="seccion_filtro_tablero">
             <div class="row">
@@ -32,7 +36,7 @@
                             </div>
                             <div class="col-lg-3 col-sm-6 col-xs-12">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="genero" id="genero_h">
+                                    <input class="form-check-input" type="radio" name="genero_buscar" id="genero_h">
                                     <label class="form-check-label" for="genero_h">
                                         Masculino
                                     </label>
@@ -40,7 +44,7 @@
                             </div>
                             <div class="col-lg-3 col-sm-6 col-xs-12">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="genero" id="genero_f">
+                                    <input class="form-check-input" type="radio" name="genero_buscar" id="genero_f">
                                     <label class="form-check-label" for="genero_f">
                                         Femenino
                                     </label>
@@ -76,35 +80,7 @@
                                 <th>Datos de contacto</th>
                                 <th>Operaciones</th>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Enrique Corona</td>
-                                    <td>1 de enero</td>
-                                    <td>
-                                        <li>Celular: 246 123 4567</li>
-                                        <li>Correo: enrique@corre.com</li>
-                                    </td>
-                                    <td>
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#modal_registro_contacto"
-                                                class="btn_modificar_contacto btn btn-sm btn-outline-warning">Editar</button>
-                                        <button type="button" class="btn_eliminar_contacto btn btn-sm btn-outline-danger">Eliminar</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Samantha Hernandez</td>
-                                    <td>1 de febrero</td>
-                                    <td>
-                                        <li>Celular: 246 123 9876</li>
-                                        <li>Correo: sam@corre.com</li>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn_modificar_contacto btn btn-sm btn-outline-warning">Editar</button>
-                                        <button type="button" class="btn_eliminar_contacto btn btn-sm btn-outline-danger">Eliminar</button>
-                                    </td>
-                                </tr>
-                                </tbody>
+                                <tbody id="tbodyResultadosEmpleado"></tbody>
                             </table>
                         </div>
                     </div>
@@ -117,7 +93,7 @@
             <div class="row">
                 <div class="col-3"></div>
                 <div class="col-6">
-                    <form id="form_registro_contacto">
+                    <form id="form_registro_contacto" method="post">
                         <div class="row">
                             <div class="col-12">
                                 <label for="nombre_form">Nombre</label>
@@ -128,6 +104,48 @@
                             <div class="col-12">
                                 <label for="paterno_form">Apellido Paterno</label>
                                 <input type="text" id="paterno_form" name="paterno" class="form-control" placeholder="Paterno">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="materno_form">Apellido Materno</label>
+                                <input type="text" id="materno_form" name="materno" class="form-control" placeholder="Materno">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="nacimiento_form">Fecha de nacimiento</label>
+                                <input type="date" id="nacimiento_form" name="nacimiento" class="form-control" placeholder="Fecha de nacimiento">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="domicilio_form">Domicilio</label>
+                                <input type="text" id="domicilio_form" name="domicilio" class="form-control" placeholder="Domicilio">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-6 col-xs-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="genero" id="genero_h_form" value="h">
+                                    <label class="form-check-label" for="genero_h">
+                                        Masculino
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-xs-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="genero" id="genero_f_form" value="m">
+                                    <label class="form-check-label" for="genero_f">
+                                        Femenino
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 centrado">
+                                <button type="button" id="btn_guardar_empleado_seccion" class="btn btn-sm btn-outline-success">Guardar</button>
+                                <button type="button" id="btn_cancelar_empleado_seccion" class="btn btn-sm btn-outline-danger">Cancelar</button>
                             </div>
                         </div>
                     </form>
@@ -173,6 +191,7 @@
     <!-- integracion de JS necesarios -->
     <script src="js/lib/jquery-3.6.0.min.js"></script>
     <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/variables.js"></script>
     <script src="js/agenda.js"></script>
 </body>
 </html>

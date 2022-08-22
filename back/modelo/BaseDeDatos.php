@@ -69,13 +69,29 @@ class BaseDeDatos
     public function insertarRegistro($tabla,$valores_insert){
         try{
             $string_llave_valor = $this->obtenerCadenaInsert($valores_insert);
-            var_dump($string_llave_valor);
+            //var_dump($string_llave_valor);
             $sqlInsert = "insert into $tabla(".$string_llave_valor['columnas'].") values(".$string_llave_valor['values'].")";
-            var_dump($sqlInsert);exit;
+            try{
+                $query = $this->mysqli->query($sqlInsert);
+                if($query !== true){
+                    return false;
+                }
+                return true;
+            }catch (Exception $ex){
+                return false;
+            }
             //culminar el insertado de este SQL a la BD
         }catch (Exception $ex){
             $this->errores[] = $ex->getMessage();
         }
+    }
+
+    public function actualizarRegistro($tabla,$valores_update, $condicionales){
+
+    }
+
+    public function eliminarRegistro($tabla, $condicionales){
+
     }
 
     private function obtenerCadenaInsert($valores_insert){
