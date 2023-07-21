@@ -8,6 +8,7 @@ include_once "controlador/EmpleadoControlador.php";
  * el permitir el acceso va a ser desde los parametros GET de la ruta y que existan los campos: peticion y funcion
  * y este va a responder en un JSON (status: t/f, [msg], opcionalmente: data) y el codigo: 200,201, 404, 500
  * control paramentros GET, datos de formulario: paramentros POST
+ * modificacion para hacer commit con consola
  */
 
 $respuesta_back = array(
